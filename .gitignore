@@ -1,0 +1,14 @@
+# Build files
+builds/
+log/
+src/packer_cache
+
+# Build artifacts
+*.iso
+.box
+.ova
+.vagrant
+
+
+# Junk
+packer_cache/
