@@ -16,7 +16,7 @@ export PACKER_CACHE_DIR=../builds/.packer_cache
 export PACKER_KEY_INTERVAL=10ms
 
 # What to build. Change to null to debug. Supports: virtualbox-iso,vmware-iso, qemu
-export BUILDS_ONLY=vmware-iso
+export BUILDS_ONLY=virtualbox-iso
 
 .DEFAULT_GOAL :=rhel-8-base
 
