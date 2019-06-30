@@ -2,6 +2,7 @@ OS Image Builder
 ================
 
 > Images on: https://app.vagrantup.com/cmihai
+> Ansible scripts at: https://github.com/crivetimihai/ansible-rhel-8
 
 - Packer builds base OS images (RHEL/Fedora) from Kickstart and outputs VirtualBox/Vagrant Box/KVM/VMware images.
 - Vagrant calls Ansible scripts to perform post-provisioning tasks.
