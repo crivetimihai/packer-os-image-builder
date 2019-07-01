@@ -76,3 +76,7 @@ Fixme
 1. Fix broken build vmware-ubuntu-18.04-base
 2. Add iso_download_url variables to all images
 3. Fix parallel builds: when VirtualBox is running, KVM qemu won't run https://bugzilla.redhat.com/show_bug.cgi?id=1277744
+
+Resources:
+----------
+- https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html#chapter-3-kickstart-commands-in-red-hat-enterprise-linux
