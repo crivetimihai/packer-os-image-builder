@@ -1,6 +1,6 @@
 {
   "variables": {
-    "vm_name": "rhel-8-base",  
+    "vm_name": "rhel-8-base",
     "iso_local_url": "{{env `ISO_DIR`}}/rhel-8.0-x86_64-dvd.iso",
     "iso_download_url": "https://developers.redhat.com/download-manager/file/rhel-8.0-x86_64-dvd.iso",
     "iso_sha256": "005d4f88fff6d63b0fc01a10822380ef52570edd8834321de7be63002cc6cc43",
@@ -150,7 +150,7 @@
       "ssh_password": "{{user `vm_ssh_pass`}}",
       "ssh_timeout": "{{user `vm_ssh_timeout`}}",
       "boot_wait": "{{user `boot_wait_time`}}"
-    }    
+    }
   ],
 
   "provisioners": [
