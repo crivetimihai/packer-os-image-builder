@@ -8,13 +8,13 @@
     "vbox_guest_os_type": "RedHat_64",
     "vmware_guest_os_type": "rhel8-64",
     "vagrantfile_template": "files/rhel-8-base-vagrantfile",
-    
-    "playbook_file": "../../ansible-rhel-8/playbook.yml",
+
+    "playbook_file": "../../ansible-rhel-8/playbook-rhel-8-base.yml",
 
     "vm_version": "1.0",
     "vm_description": "{{user `vm_name`}} {{split build_type \"-\" 0}} {{timestamp}} by {{user `vm_author`}}"
   },
-  
+
   "builders": [
     {
       "type": "null",

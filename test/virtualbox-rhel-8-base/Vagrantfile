@@ -38,8 +38,8 @@ Vagrant.configure("2") do |config|
   #config.vm.provision "shell", path: "bootstrap.sh"
 
   config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../../../ansible-rhel-8/playbook.yml"
-      #ansible.verbose = "vvv"
+      ansible.playbook = "../../../ansible-rhel-8/playbook-rhel-big.yml"
+  #    #ansible.verbose = "vvv"
   end
 end
 

@@ -58,7 +58,7 @@ TODO
 2. Cloud image support
 3. CI/CD build
 4. Post-base image scripts (ansible)
-
+5. Create image-builder script (generates toml configuration, can add new OS support, downloads initial ISO images)
 
 Add Images
 ----------
