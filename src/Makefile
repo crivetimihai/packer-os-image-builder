@@ -34,3 +34,11 @@ rhel-8-base:
 	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true 
 	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
 	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
+
+centos-7-base:
+	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
+	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(PACKER) build -only=$(BUILDS_ONLY) -on-error=ask -var-file=config.json -force $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true 
+	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
