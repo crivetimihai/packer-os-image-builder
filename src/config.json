@@ -7,7 +7,7 @@
   "vm_disk_size": "40960",
   "vm_memory": "4096",
   "vm_cpus": "4",
-  "headless": "false",
+  "headless": "true",
   "keep_registered": "false",
 
   "vm_ssh_user": "vagrant",
@@ -17,6 +17,6 @@
   "http_dir": "http",
   "shutdown_command": "sudo systemctl poweroff",
 
-  "iso_vbox_guest_additions_url": "../../iso/VBoxGuestAdditions_6.0.8.iso",
+  "iso_vbox_guest_additions_url": "../../iso/VBoxGuestAdditions_6.0.10.iso",
   "iso_vbox_guest_additions_sha256": "4cb9a805267d8d338bfad0f3cef8b83132be6cad622c311daa41a18cc2ea4fda"
 }

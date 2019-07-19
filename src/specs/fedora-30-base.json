@@ -1,0 +1,173 @@
+{
+  "variables": {
+    "vm_name": "fedora-30-base",
+    "iso_local_url": "{{env `ISO_DIR`}}/Fedora-Server-dvd-x86_64-30-1.2.iso",
+    "iso_download_url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/30/Server/x86_64/iso/Fedora-Server-dvd-x86_64-30-1.2.iso",
+    "iso_sha256": "bb0622b78449298e24a96b90b561b429edec71aae72b8f7a8c3da4d81e4df5b7",
+
+    "vbox_guest_os_type": "RedHat_64",
+    "vmware_guest_os_type": "rhel8-64",
+    "vagrantfile_template": "files/fedora-30-base-vagrantfile",
+
+    "playbook_file": "../../ansible-rhel-8/playbook-fedora-30-base.yml",
+    "galaxy_file": "ansible/rhel-8-base-requirements.yml",
+
+    "vm_version": "1.0",
+    "vm_description": "{{user `vm_name`}} {{split build_type \"-\" 0}} {{timestamp}} by {{user `vm_author`}}"
+  },
+
+  "builders": [
+    {
+      "type": "null",
+      "ssh_host":     "172.16.0.4",
+      "ssh_username": "{{user `vm_ssh_user`}}",
+      "ssh_password": "{{user `vm_ssh_pass`}}",
+      "ssh_timeout":  "{{user `vm_ssh_timeout`}}"
+    },
+
+
+    {
+      "type": "virtualbox-iso",
+      "format": "ova",
+      "headless": "{{user `headless`}}",
+      "keep_registered": "{{user `keep_registered`}}",
+      "guest_additions_path": "/tmp/VBoxGuestAdditions.iso",
+      "guest_additions_url": "{{user `iso_vbox_guest_additions_url`}}",
+      "guest_additions_sha256": "{{user `iso_vbox_guest_additions_sha256`}}",
+      "export_opts":
+      [
+        "--manifest",
+        "--vsys", "0",
+        "--description", "{{user `vm_description`}}",
+        "--version", "{{user `vm_version`}}"
+      ],
+      "guest_os_type": "{{user `vbox_guest_os_type`}}",
+      "disk_size": "{{user `vm_disk_size`}}",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--cpus", "{{user `vm_cpus`}}"],
+        ["modifyvm", "{{.Name}}", "--memory", "{{user `vm_memory`}}"],
+        ["modifyvm", "{{.Name}}", "--ioapic", "on"],
+        ["modifyvm", "{{.Name}}", "--pae", "on"],
+        ["modifyvm", "{{.Name}}", "--rtcuseutc", "on"],
+        ["modifyvm", "{{.Name}}", "--bioslogodisplaytime", "1"],
+        ["modifyvm", "{{.Name}}", "--usb", "off"],
+        ["modifyvm", "{{.Name}}", "--usbehci", "off"]
+      ],
+
+      "boot_command": [
+        "<up><wait><tab>",
+        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<enter><wait>"
+      ],
+
+      "vm_name": "{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "iso_urls": [
+        "{{user `iso_local_url`}}",
+        "{{user `iso_download_url`}}"
+      ],
+      "iso_checksum": "{{user `iso_sha256`}}",
+      "iso_checksum_type": "sha256",
+      "output_directory": "{{user `builds_dir`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "http_directory": "{{user `http_dir`}}",
+      "ssh_username": "{{user `vm_ssh_user`}}",
+      "ssh_password": "{{user `vm_ssh_pass`}}",
+      "ssh_timeout": "{{user `vm_ssh_timeout`}}",
+      "boot_wait": "{{user `boot_wait_time`}}"
+    },
+
+
+    {
+      "type": "vmware-iso",
+      "headless": "{{user `headless`}}",
+      "keep_registered": "{{user `keep_registered`}}",
+      "guest_os_type": "{{user `vmware_guest_os_type`}}",
+      "vmdk_name": "{{user `vm_name`}}",
+      "disk_size": "{{user `vm_disk_size`}}",
+      "disk_type_id": 0,
+      "network": "nat",
+      "vmx_data": {
+        "numvcpus": "{{user `vm_cpus`}}",
+        "memsize": "{{user `vm_memory`}}",
+        "ethernet0.present": true,
+        "ethernet0.startConnected": true,
+        "ethernet0.connectionType": "custom",
+        "ethernet0.vnet": "vmnet8",
+        "ethernet1.present": true,
+        "ethernet1.startConnected": true,
+        "ethernet1.connectionType": "custom",
+        "ethernet1.vnet": "vmnet1"
+      },
+
+      "boot_command": [
+        "<up><wait><tab>",
+        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<enter><wait>"
+      ],
+
+      "vm_name": "{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "iso_urls": [
+        "{{user `iso_local_url`}}",
+        "{{user `iso_download_url`}}"
+      ],
+      "iso_checksum": "{{user `iso_sha256`}}",
+      "iso_checksum_type": "sha256",
+      "output_directory": "{{user `builds_dir`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "http_directory": "{{user `http_dir`}}",
+      "ssh_username": "{{user `vm_ssh_user`}}",
+      "ssh_password": "{{user `vm_ssh_pass`}}",
+      "ssh_timeout": "{{user `vm_ssh_timeout`}}",
+      "boot_wait": "{{user `boot_wait_time`}}"
+    },
+
+
+    {
+      "type": "qemu",
+      "accelerator": "kvm",
+      "headless": "{{user `headless`}}",
+      "disk_size": "{{user `vm_disk_size`}}",
+      "format": "qcow2",
+      "disk_interface": "virtio-scsi",
+      "net_device": "virtio-net",
+
+      "boot_command": [
+        "<up><wait><tab>",
+        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<enter><wait>"
+      ],
+
+      "vm_name": "{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "iso_urls": [
+        "{{user `iso_local_url`}}",
+        "{{user `iso_download_url`}}"
+      ],
+      "iso_checksum": "{{user `iso_sha256`}}",
+      "iso_checksum_type": "sha256",
+      "output_directory": "{{user `builds_dir`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}",
+      "shutdown_command": "{{user `shutdown_command`}}",
+      "http_directory": "{{user `http_dir`}}",
+      "ssh_username": "{{user `vm_ssh_user`}}",
+      "ssh_password": "{{user `vm_ssh_pass`}}",
+      "ssh_timeout": "{{user `vm_ssh_timeout`}}",
+      "boot_wait": "{{user `boot_wait_time`}}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "{{user `playbook_file`}}"
+    }
+  ],
+
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "vagrantfile_template": "{{user `vagrantfile_template`}}",
+      "compression_level": 9,
+      "output": "{{user `builds_dir`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}.box",
+      "keep_input_artifact": true
+    }
+  ]
+}

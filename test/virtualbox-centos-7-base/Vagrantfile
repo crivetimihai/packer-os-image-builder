@@ -3,20 +3,20 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "centos-7-base"
-  config.vm.hostname = "centos-7.lab.local"
+  config.vm.hostname = "centos7.lab.local"
   # Pick a private IP that won't conflict with your network
   config.vm.network "private_network", ip: "172.16.6.3"
 
   config.vm.post_up_message = "Review the information in motd after login!"
 
   config.vm.provider "virtualbox" do |vb|
-     vb.gui = true
+     vb.gui = false
      vb.cpus = "2"
      vb.memory = "4096"
 
      # https://www.virtualbox.org/manual/ch08.html#vboxmanage-modifyvm
      vb.customize ["modifyvm", :id, "--vram", "256"]
-     vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+     vb.customize ["modifyvm", :id, "--accelerate3d", "off"]
 
      vb.customize ["modifyvm", :id, "--usb", "off"]
      vb.customize ["modifyvm", :id, "--usbehci", "off"]

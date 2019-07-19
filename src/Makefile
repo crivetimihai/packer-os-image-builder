@@ -18,9 +18,9 @@ export PACKER_KEY_INTERVAL=10ms
 # What to build. Change to null to debug. Supports: virtualbox-iso,vmware-iso, qemu
 export BUILDS_ONLY=virtualbox-iso
 
-.DEFAULT_GOAL :=rhel-8-base
+.DEFAULT_GOAL :=fedora-30-base
 
-all: rhel-8-base # centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
+all: fedora-30-base # centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
 
 #############################################################################
 # make -j 10
@@ -35,6 +35,7 @@ rhel-8-base:
 	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
 	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
 
+# [X] CentOS 7
 centos-7-base:
 	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
 	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
@@ -42,3 +43,13 @@ centos-7-base:
 	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true 
 	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
 	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
+
+# [X] Fedora 30
+fedora-30-base:
+	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
+	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(PACKER) build -only=$(BUILDS_ONLY) -on-error=ask -var-file=config.json -force $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true 
+	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
+
