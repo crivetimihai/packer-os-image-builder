@@ -18,5 +18,5 @@
   "shutdown_command": "sudo systemctl poweroff",
 
   "iso_vbox_guest_additions_url": "../../iso/VBoxGuestAdditions_6.0.10.iso",
-  "iso_vbox_guest_additions_sha256": "4cb9a805267d8d338bfad0f3cef8b83132be6cad622c311daa41a18cc2ea4fda"
+  "iso_vbox_guest_additions_sha256": "c8a686f8c7ad9ca8375961ab19815cec6b1f0d2496900a356a38ce86fe8a1325"
 }

@@ -10,6 +10,7 @@
     "vagrantfile_template": "files/fedora-30-base-vagrantfile",
 
     "playbook_file": "../../ansible-rhel-8/playbook-fedora-30-base.yml",
+    "playbook_dir": "../../ansible-rhel-8",
     "galaxy_file": "ansible/rhel-8-base-requirements.yml",
 
     "vm_version": "1.0",
@@ -156,8 +157,10 @@
 
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "{{user `playbook_file`}}"
+      "type": "ansible-local",
+      "playbook_file": "{{user `playbook_file`}}",
+      "playbook_dir": "{{user `playbook_dir`}}",
+      "extra_arguments": "-e ansible_python_interpreter=/usr/bin/python3"
     }
   ],
 
