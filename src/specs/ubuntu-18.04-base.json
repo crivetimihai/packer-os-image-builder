@@ -1,15 +1,17 @@
 {
   "variables": {
-    "vm_name": "rhel-8-base",
-    "iso_local_url": "{{env `ISO_DIR`}}/rhel-8.0-x86_64-dvd.iso",
-    "iso_download_url": "https://developers.redhat.com/download-manager/file/rhel-8.0-x86_64-dvd.iso",
-    "iso_sha256": "005d4f88fff6d63b0fc01a10822380ef52570edd8834321de7be63002cc6cc43",
+    "vm_name": "ubuntu-18.04-base",
+    "iso_local_url": "{{env `ISO_DIR`}}/ubuntu-18.04.2-server-amd64.iso",
+    "iso_download_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.2-server-amd64.iso",
+    "iso_sha256": "a2cb36dc010d98ad9253ea5ad5a07fd6b409e3412c48f1860536970b073c98f5",
 
-    "vbox_guest_os_type": "RedHat_64",
-    "vmware_guest_os_type": "rhel8-64",
-    "vagrantfile_template": "files/rhel-8-base-vagrantfile",
+    "vbox_guest_os_type": "Ubuntu_64",
+    "vmware_guest_os_type": "ubuntu-64",
+    "vagrantfile_template": "files/ubuntu-18.04-base-vagrantfile",
 
-    "playbook_file": "../../ansible-rhel-8/playbook-rhel-8-base.yml",
+    "playbook_file": "../../ansible-rhel-8/playbook-ubuntu-18.04-base.yml",
+    "playbook_dir": "../../ansible-rhel-8",
+    "galaxy_file": "ansible/rhel-8-base-requirements.yml",
 
     "vm_version": "1.0",
     "vm_description": "{{user `vm_name`}} {{split build_type \"-\" 0}} {{timestamp}} by {{user `vm_author`}}"
@@ -18,7 +20,7 @@
   "builders": [
     {
       "type": "null",
-      "ssh_host":     "172.16.0.2",
+      "ssh_host":     "172.16.0.5",
       "ssh_username": "{{user `vm_ssh_user`}}",
       "ssh_password": "{{user `vm_ssh_pass`}}",
       "ssh_timeout":  "{{user `vm_ssh_timeout`}}"
@@ -54,8 +56,28 @@
       ],
 
       "boot_command": [
-        "<up><wait><tab>",
-        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz",
+        " auto=true",
+        " console-setup/ask_detect=false",
+        " console-setup/layoutcode=us",
+        " console-setup/modelcode=pc105",
+        " debconf/frontend=noninteractive",
+        " debian-installer=en_US",
+        " fb=false",
+        " initrd=/install/initrd.gz",
+        " kbd-chooser/method=us",
+        " keyboard-configuration/layout=USA",
+        " keyboard-configuration/variant=USA",
+        " locale=en_US",
+        " netcfg/get_domain=vm",
+        " netcfg/get_hostname=vagrant",
+        " grub-installer/bootdev=/dev/sda",
+        " noapic",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-18.04-base.cfg",
+        " -- <wait>",
         "<enter><wait>"
       ],
 
@@ -99,8 +121,28 @@
       },
 
       "boot_command": [
-        "<up><wait><tab>",
-        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz",
+        " auto=true",
+        " console-setup/ask_detect=false",
+        " console-setup/layoutcode=us",
+        " console-setup/modelcode=pc105",
+        " debconf/frontend=noninteractive",
+        " debian-installer=en_US",
+        " fb=false",
+        " initrd=/install/initrd.gz",
+        " kbd-chooser/method=us",
+        " keyboard-configuration/layout=USA",
+        " keyboard-configuration/variant=USA",
+        " locale=en_US",
+        " netcfg/get_domain=vm",
+        " netcfg/get_hostname=vagrant",
+        " grub-installer/bootdev=/dev/sda",
+        " noapic",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-18.04-base.cfg",
+        " -- <wait>",
         "<enter><wait>"
       ],
 
@@ -131,8 +173,28 @@
       "net_device": "virtio-net",
 
       "boot_command": [
-        "<up><wait><tab>",
-        " text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `vm_name`}}.cfg net.ifnames=0",
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz",
+        " auto=true",
+        " console-setup/ask_detect=false",
+        " console-setup/layoutcode=us",
+        " console-setup/modelcode=pc105",
+        " debconf/frontend=noninteractive",
+        " debian-installer=en_US",
+        " fb=false",
+        " initrd=/install/initrd.gz",
+        " kbd-chooser/method=us",
+        " keyboard-configuration/layout=USA",
+        " keyboard-configuration/variant=USA",
+        " locale=en_US",
+        " netcfg/get_domain=vm",
+        " netcfg/get_hostname=vagrant",
+        " grub-installer/bootdev=/dev/sda",
+        " noapic",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-18.04-base.cfg",
+        " -- <wait>",
         "<enter><wait>"
       ],
 
@@ -155,8 +217,9 @@
 
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "{{user `playbook_file`}}"
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "provisioners/ubuntu-18.04-base-post.sh"
     }
   ],
 

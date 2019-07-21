@@ -18,9 +18,9 @@ export PACKER_KEY_INTERVAL=10ms
 # What to build. Change to null to debug. Supports: virtualbox-iso,vmware-iso, qemu
 export BUILDS_ONLY=virtualbox-iso
 
-.DEFAULT_GOAL :=fedora-30-base
+.DEFAULT_GOAL :=ubuntu-18.04-base
 
-all: fedora-30-base # centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
+all: ubuntu-18.04-base # centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
 
 #############################################################################
 # make -j 10
@@ -46,6 +46,15 @@ centos-7-base:
 
 # [X] Fedora 30
 fedora-30-base:
+	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
+	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(PACKER) build -only=$(BUILDS_ONLY) -on-error=ask -var-file=config.json -force $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true 
+	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
+
+# [X] Ubuntu 18.04
+ubuntu-18.04-base:
 	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
 	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
 	$(PACKER) build -only=$(BUILDS_ONLY) -on-error=ask -var-file=config.json -force $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
