@@ -18,9 +18,9 @@ export PACKER_KEY_INTERVAL=10ms
 # What to build. Change to null to debug. Supports: virtualbox-iso,vmware-iso, qemu
 export BUILDS_ONLY=virtualbox-iso
 
-.DEFAULT_GOAL :=debian-10-base
+.DEFAULT_GOAL :=fedora-30-base
 
-all: debian-10-base # ubuntu-18.04-base centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
+all: fedora-30-base # ubuntu-18.04-base centos-7-base fedora-30-base alpine-3.10-base ubuntu-18.04-base debian-9.9-base
 
 #############################################################################
 # make -j 10
