@@ -2,10 +2,10 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "rhel-8-base"
-  config.vm.hostname = "rhel-8.lab.local"
+  config.vm.box = "centos-8-base"
+  config.vm.hostname = "centos8.lab.local"
   # Pick a private IP that won't conflict with your network
-  config.vm.network "private_network", ip: "172.16.6.2"
+  config.vm.network "private_network", ip: "172.16.6.4"
 
   config.vm.post_up_message = "Review the information in motd after login!"
 
@@ -37,9 +37,9 @@ Vagrant.configure("2") do |config|
 #  config.vm.synced_folder "../../../ansible-rhel-8", "/ansible", mount_options: ["ro"]
   #config.vm.provision "shell", path: "bootstrap.sh"
 
-#  config.vm.provision "ansible" do |ansible|
-#        ansible.playbook = "../../../ansible-rhel-8/playbook-rhel-big.yml"
+  #config.vm.provision "ansible" do |ansible|
+  #    ansible.playbook = "../../../ansible-rhel-8/playbook-rhel-big.yml"
   #    #ansible.verbose = "vvv"
- # end
+  #end
 end
 

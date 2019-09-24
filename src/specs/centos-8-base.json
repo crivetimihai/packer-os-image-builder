@@ -1,13 +1,13 @@
 {
   "variables": {
-    "vm_name": "rhel-8-base",
-    "iso_local_url": "{{env `ISO_DIR`}}/rhel-8.0-x86_64-dvd.iso",
-    "iso_download_url": "https://developers.redhat.com/download-manager/file/rhel-8.0-x86_64-dvd.iso",
-    "iso_sha256": "005d4f88fff6d63b0fc01a10822380ef52570edd8834321de7be63002cc6cc43",
+    "vm_name": "centos-8-base",
+    "iso_local_url": "{{env `ISO_DIR`}}/CentOS-8-x86_64-1905-dvd1.iso",
+    "iso_download_url": "http://mirror.internode.on.net/pub/centos/8.0.1905/isos/x86_64/CentOS-8-x86_64-1905-dvd1.iso",
+    "iso_sha256": "ea17ef71e0df3f6bf1d4bf1fc25bec1a76d1f211c115d39618fe688be34503e8",
 
     "vbox_guest_os_type": "RedHat_64",
     "vmware_guest_os_type": "rhel8-64",
-    "vagrantfile_template": "files/rhel-8-base-vagrantfile",
+    "vagrantfile_template": "files/centos-8-base-vagrantfile",
 
     "playbook_file": "provisioners/ansible/playbook.yml",
 
