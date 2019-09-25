@@ -9,8 +9,8 @@
     "vmware_guest_os_type": "debian-64",
     "vagrantfile_template": "files/debian-10-base-vagrantfile",
 
-    "playbook_file": "../../ansible-rhel-8/playbook-debian-10-base.yml",
-    "playbook_dir": "../../ansible-rhel-8",
+    "playbook_file": "provisioners/ansible/playbook.yml",
+    "playbook_dir": "provisioners/ansible",
     "galaxy_file": "ansible/rhel-8-base-requirements.yml",
 
     "vm_version": "1.0",
