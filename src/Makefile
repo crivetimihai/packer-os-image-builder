@@ -49,6 +49,18 @@ centos-8-base:
 	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
 	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
 
+
+centos-8-pci:
+	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
+	vboxmanage controlvm virtualbox-$@ poweroff || true
+	vboxmanage unregistervm virtualbox-$@ --delete || true
+	$(PACKER) inspect $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(PACKER) build -on-error=ask -var-file=config.json -force $(SPECS_DIR)/$@.json | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box remove $@ | tee -a $(LOG_DIR)/$@.log; true
+	$(VAGRANT) box add --name $@ $(BUILDS_DIR)/*$@/*$@.box | tee -a $(LOG_DIR)/$@.log
+	$(VAGRANT) box list | tee -a $(LOG_DIR)/$@.log
+
+
 # [X] CentOS 7
 centos-7-base:
 	[[ -d $(LOG_DIR) ]] || mkdir -p $(LOG_DIR)
@@ -96,4 +108,3 @@ debian-10-base:
 clean:
 	vboxmanage controlvm virtualbox-centos-7 poweroff || true
 	vboxmanage unregistervm virtualbox-centos-7 --delete || true
-

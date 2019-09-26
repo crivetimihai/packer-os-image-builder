@@ -9,6 +9,22 @@ OS Image Builder
 
 Currently supports Vagrant box and images (VirtualBox, VMware and KVM) for RHEL 8, CentOS 7, Fedora 30, Ubuntu 18.04, Alpine 3.10.
 
+
+CI/CD
+------
+
+```
+podman run \
+  -u root \
+  --rm \
+  -d \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  -v jenkins-data:/var/jenkins_home \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  jenkinsci/blueocean
+```
+
 Prereq
 ------
 1. Download installation media to `../iso`.
@@ -63,7 +79,6 @@ TODO
 Add Images
 ----------
 
-- Debian
 - CoreOS
 - SuSE
 - OpenBSD
@@ -74,8 +89,7 @@ Fixme
 -----
 
 1. Fix broken build vmware-ubuntu-18.04-base
-2. Add iso_download_url variables to all images
-3. Fix parallel builds: when VirtualBox is running, KVM qemu won't run https://bugzilla.redhat.com/show_bug.cgi?id=1277744
+3. Fix parallel builds: when VirtualBox is running, KVM qemu won't run https://bugzilla.redhat.com/show_bug.cgi?id=1277744r2
 
 Resources:
 ----------

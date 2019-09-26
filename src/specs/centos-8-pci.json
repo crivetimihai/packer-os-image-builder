@@ -1,0 +1,40 @@
+{
+  "variables": {
+    "vm_name": "centos-8-pci",
+
+    "vbox_guest_os_type": "RedHat_64",
+    "vagrantfile_template": "files/centos-8-base-vagrantfile",
+
+    "playbook_file": "provisioners/ansible/playbook.yml",
+
+    "vm_version": "1.0",
+    "vm_description": "{{user `vm_name`}} {{split build_type \"-\" 0}} {{timestamp}} by {{user `vm_author`}}"
+  },
+
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "{{user `builds_dir`}}/virtualbox-centos-8-base/virtualbox-centos-8-base.ova",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "{{user `playbook_file`}}"
+    }
+  ],
+
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "vagrantfile_template": "{{user `vagrantfile_template`}}",
+      "compression_level": 9,
+      "output": "{{user `builds_dir`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}/{{split build_type \"-\" 0}}-{{user `vm_name`}}.box",
+      "keep_input_artifact": true
+    }
+  ]
+}

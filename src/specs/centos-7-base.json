@@ -9,7 +9,7 @@
     "vmware_guest_os_type": "rhel7-64",
     "vagrantfile_template": "files/centos-7-base-vagrantfile",
 
-    "playbook_file": "ansible-rhel-8/playbook-centos-7-base.yml",
+    "playbook_file": "provisioners/ansible/playbook.yml",
 
     "vm_version": "1.0",
     "vm_description": "{{user `vm_name`}} {{split build_type \"-\" 0}} {{timestamp}} by {{user `vm_author`}}"
