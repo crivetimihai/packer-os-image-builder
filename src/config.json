@@ -3,7 +3,7 @@
 
   "builds_dir": "../builds",
   "iso_dir": "../../iso",
-      
+
   "vm_disk_size": "40960",
   "vm_memory": "4096",
   "vm_cpus": "4",
@@ -12,11 +12,11 @@
 
   "vm_ssh_user": "vagrant",
   "vm_ssh_pass": "vagrant",
-  "vm_ssh_timeout": "60m",
+  "vm_ssh_timeout": "120m",
   "boot_wait_time": "5s",
   "http_dir": "http",
   "shutdown_command": "sudo systemctl poweroff",
 
-  "iso_vbox_guest_additions_url": "../../iso/VBoxGuestAdditions_6.0.10.iso",
-  "iso_vbox_guest_additions_sha256": "c8a686f8c7ad9ca8375961ab19815cec6b1f0d2496900a356a38ce86fe8a1325"
+  "iso_vbox_guest_additions_url": "../../iso/VBoxGuestAdditions_6.0.12.iso",
+  "iso_vbox_guest_additions_sha256": "78fa2ba78e91c7d6f16f8c7fa88676cc9772c7689ba47e2b19913670fad2d441"
 }

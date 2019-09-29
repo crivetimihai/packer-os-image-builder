@@ -1,9 +1,9 @@
 {
   "variables": {
     "vm_name": "ubuntu-18.04-base",
-    "iso_local_url": "{{env `ISO_DIR`}}/ubuntu-18.04.2-server-amd64.iso",
-    "iso_download_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.2-server-amd64.iso",
-    "iso_sha256": "a2cb36dc010d98ad9253ea5ad5a07fd6b409e3412c48f1860536970b073c98f5",
+    "iso_local_url": "{{env `ISO_DIR`}}/ubuntu-18.04.3-server-amd64.iso",
+    "iso_download_url": "http://cdimage.ubuntu.com/ubuntu/releases/bionic/release/ubuntu-18.04.3-server-amd64.iso",
+    "iso_sha256": "7d8e0055d663bffa27c1718685085626cb59346e7626ba3d3f476322271f573e",
 
     "vbox_guest_os_type": "Ubuntu_64",
     "vmware_guest_os_type": "ubuntu-64",

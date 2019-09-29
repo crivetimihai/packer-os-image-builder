@@ -1,0 +1,66 @@
+Welcome:
+  lang: en_US
+Refresh:
+  update: no
+Keyboard:
+  layout: us
+Network:
+  accept-default: yes
+Proxy:
+  proxy: ""
+Mirror:
+  mirror: "http://ie.archive.ubuntu.com"
+Filesystem:
+  manual:
+    - obj: [disk index 0]
+      action: MAKE_BOOT
+    - &newpart
+      obj: [disk index 0]
+      action: PARTITION
+      data:
+        size: 1G
+        fstype: null
+    - *newpart
+    - *newpart
+    - *newpart
+    - *newpart
+    - *newpart
+    - obj: [disk index 0]
+      action: PARTITION
+      data:
+        size: 1G
+        fstype: ext4
+        mount: /boot
+    - action: create-vg
+      data:
+        name: vg-1
+        devices:
+          - [disk index 0, part 1]
+          - [disk index 0, part 2]
+    - obj: [volgroup name vg-1]
+      action: CREATE_LV
+      data:
+        name: lv-0
+        size: 5G
+        fstype: ext4
+        mount: /
+    - action: done
+Identity:
+  realname: Vagrant
+  username: vagrant
+  hostname: vagrant
+  # ubuntu
+  password: '$6$wdAcoXrU039hKYPd$508Qvbe7ObUnxoj15DRCkzC3qO7edjH0VV7BPNRDYK4QR8ofJaEEF2heacn0QgD.f8pO8SNp83XNdWG6tocBM1'
+SSH:
+  install_server: true
+  pwauth: false
+  authorized_keys:
+    - |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC38XwszigERVT9VLJTgP8Aqn9NSB81gAW+l6AW5ClnJf7LcLKM5W8Uj6ZBETokh4UnOfZA88Q+RferA6/O6L0uNKN1sBgBq4MG9znJfk1Qe41jbLzsq0MDKh360kciG9j+m4a8YM878MUiYd4k2pYH+oB1P802jQEf1MHUwX4CpKxACRoJMuZZ4KnGGrKlvSnZXrFakBSShOIjwTvP2iwx6zyDftZKm3m2NtkL0boW+iIZDdj1C1k/A+xHxodnt3OI0qHHo19Z6ROtu0k+JsnlA+a0Smp3cWn/t44/DYB/7IPt53P+Z59/3wdhlU9VmwDnuqwsRQ42X45rvDF2nK1Qp/dcoLi3PqFfHy0N03OP4dsKnyx7AfkmJdWFDTOHxR4x1TUDLRtaDLFlNvcq+8jE0YnKTxsQD+07GWAYHhabBscXX2B2Hz1HYYN3RG0oJ9nzk75KLybNnDimTeqfWzuXKHlfYeFHE19mlBvvkS/zFEOa5QGjVsNi7s98HFtn8hpF1jS+sXy1JVLjPo0ELvvydTPIosamG6SvdOg6qbEg/FHvCIarNK9B8OKbu1IUXc/2L62M8IvwVa/XzqTvSTF9HQk8EsGWJd6LecOtqA8K4ibuiykei7VI0h3v21dQswp5uAh7enGMQPpZyV4sh0rBDNVWuL4kG85S+oVQ2JRenw== # ssh-import-id lp:subiquity
+SnapList:
+  snaps:
+    hello:
+      channel: stable
+      is_classic: false
+InstallProgress:
+  reboot: yes
